@@ -3,6 +3,7 @@ package com.jvcompany.services.entities;
 import jakarta.persistence.*;
 
 import java.io.Serializable;
+import java.util.List;
 import java.util.Objects;
 
 @Entity
@@ -17,6 +18,9 @@ public class User implements Serializable {
     String email;
     String phone;
     String password;
+
+    @OneToMany(mappedBy = "client")
+    List<Order> orders;
 
     public User() {
     }
@@ -51,6 +55,10 @@ public class User implements Serializable {
 
     public void setId(long id) {
         this.id = id;
+    }
+
+    public List<Order> getOrders() {
+        return orders;
     }
 
     public String getPassword() {
