@@ -21,6 +21,7 @@ public class Product implements Serializable {
     private Double price;
     private String imgUrl;
 
+    @ManyToMany(mappedBy = "products")
     Set<Category> categories = new HashSet<>();
 
     public Product() {
