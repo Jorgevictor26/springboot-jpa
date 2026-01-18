@@ -1,7 +1,9 @@
 package com.jvcompany.services.entities;
 
+import com.jvcompany.services.entities.enums.OrderStatus;
 import jakarta.persistence.*;
 
+import java.io.Serial;
 import java.io.Serializable;
 import java.time.Instant;
 import java.util.Objects;
@@ -9,12 +11,14 @@ import java.util.Objects;
 @Entity
 @Table(name = "tb_order")
 public class Order implements Serializable {
+    @Serial
     private static final long serialVersionUID = 1L;
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private Instant moment;
+    private Integer orderStatus;
 
     @ManyToOne
     @JoinColumn(name = "FK_client")
@@ -23,10 +27,11 @@ public class Order implements Serializable {
     public Order() {
     }
 
-    public Order(User client, Instant moment, Long id) {
+    public Order(User client, Instant moment, Long id, OrderStatus orderStatus) {
         this.client = client;
         this.moment = moment;
         this.id = id;
+        setOrderStatus(orderStatus);
     }
 
     public Instant getMoment() {
@@ -39,6 +44,16 @@ public class Order implements Serializable {
 
     public User getClient() {
         return client;
+    }
+
+    public OrderStatus getOrderStatus() {
+        return OrderStatus.valueOf(orderStatus);
+    }
+
+    public void setOrderStatus(OrderStatus orderStatus) {
+        if (orderStatus != null) {
+            this.orderStatus = orderStatus.getCode();
+        }
     }
 
     @Override
