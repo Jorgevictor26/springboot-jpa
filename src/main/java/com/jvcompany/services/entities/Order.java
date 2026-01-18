@@ -6,7 +6,9 @@ import jakarta.persistence.*;
 import java.io.Serial;
 import java.io.Serializable;
 import java.time.Instant;
+import java.util.HashSet;
 import java.util.Objects;
+import java.util.Set;
 
 @Entity
 @Table(name = "tb_order")
@@ -23,6 +25,9 @@ public class Order implements Serializable {
     @ManyToOne
     @JoinColumn(name = "FK_client")
     private User client;
+
+    @OneToMany(mappedBy = "id.order")
+    Set<OrderItem> orderItems = new HashSet<>();
 
     public Order() {
     }
